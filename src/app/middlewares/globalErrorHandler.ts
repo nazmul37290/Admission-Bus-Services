@@ -119,8 +119,12 @@ const globalErrorHandler = (
       },
     ];
   }
-  return res.status(500).json({
-    mesage: "something wrong",
+  res.status(500).json({
+    success: false,
+    message,
+    errorSources,
+    stack: config?.NODE_ENV === "development" ? err?.stack : null,
+    err,
   });
 };
 

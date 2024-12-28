@@ -12,9 +12,5 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Bus is running too fast!! 🚌");
 });
 
-app.use((err, req, res, next) => {
-  return res.status(500).json({
-    mesage: "something wrong",
-  });
-});
+app.use(globalErrorHandler);
 export default app;
