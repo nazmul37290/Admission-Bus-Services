@@ -12,7 +12,11 @@ router.post(
 );
 router.get("/", BusRouteController.getAllBusRoutes);
 router.get("/:routeId", BusRouteController.getSingleBusRoute);
-router.patch("/:routeId", BusRouteController.updateBusRoute);
+router.patch(
+  "/:routeId",
+  validateRequest(BusRouteValidations.updateBusRouteValidationSchema),
+  BusRouteController.updateBusRoute
+);
 router.delete("/:routeId", BusRouteController.deleteBusRoute);
 
 export const BusRouteRouter = router;

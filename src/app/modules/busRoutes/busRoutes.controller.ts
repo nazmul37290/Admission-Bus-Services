@@ -43,20 +43,36 @@ const updateBusRoute = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.routeId;
   const updatedData = req.body;
   const result = await BusRouteServices.updateBusRouteIntoDb(id, updatedData);
-  res.status(200).json({
-    success: true,
-    message: "Bus route updated successfully",
-    data: result,
-  });
+  if (result) {
+    res.status(200).json({
+      success: true,
+      message: "Bus route updated successfully",
+      data: result,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "Bus route not found",
+      data: null,
+    });
+  }
 });
 const deleteBusRoute = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.routeId;
   const result = await BusRouteServices.deleteBusRouteFromDb(id);
-  res.status(200).json({
-    success: true,
-    message: "Bus route deleted successfully",
-    data: result,
-  });
+  if (result) {
+    res.status(200).json({
+      success: true,
+      message: "Bus route deleted successfully",
+      data: result,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "Bus route not found",
+      data: null,
+    });
+  }
 });
 
 export const BusRouteController = {

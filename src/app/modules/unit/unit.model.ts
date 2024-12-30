@@ -10,7 +10,7 @@ const unitSchema = new Schema<TUnit>(
     },
     routeId: {
       type: Schema.Types.ObjectId,
-      ref: "busRoutesModel",
+      ref: "Bus-Route",
       required: true,
     },
     dateOfExam: {
