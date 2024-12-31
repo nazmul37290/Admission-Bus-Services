@@ -1,5 +1,5 @@
 import { generateUniqueId } from "../../utils/generateUniqueId";
-import { TBus } from "./Bus.interface";
+import { TBus } from "./bus.interface";
 import { busModel } from "./bus.model";
 
 const createBusIntoDb = async (busData: TBus) => {
@@ -25,6 +25,18 @@ const getAllBusesFromDb = async (query: Record<string, unknown>) => {
     },
     {
       $unwind: "$unitDetails", // Flatten the array from $lookup
+    },
+    {
+      $lookup: {
+        from: "bus-routes", // Collection name for routes
+        localField: "unitDetails.routeId", // Field in the Unit collection
+        foreignField: "_id", // Field in the Route collection
+        as: "routeDetails", // Alias for the joined data
+      },
+    },
+    {
+      $unwind: "$routeDetails",
+      // Keeps units even if no matching route exists
     },
     {
       $match: {

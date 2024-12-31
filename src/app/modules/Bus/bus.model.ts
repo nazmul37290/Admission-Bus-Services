@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { TBus } from "./Bus.interface";
+import { TBus } from "./bus.interface";
 import { AppError } from "../../errors/AppError";
 
 const busSchema = new Schema<TBus>(
