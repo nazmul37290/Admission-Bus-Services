@@ -1,6 +1,8 @@
 import { model, Schema } from "mongoose";
 import { TUpdateUserData, TUser } from "./user.interface";
 import { AppError } from "../../errors/AppError";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const userSchema = new Schema<TUser>({
   id: {
@@ -40,6 +42,14 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre("save", async function (next) {
+  this.password = await bcrypt.hash(
+    this?.password,
+    Number(config.bcrypt_salt_rounds)
+  );
+  next();
+});
+
 userSchema.pre("findOneAndUpdate", async function (next) {
   const updatedData: TUpdateUserData = this.getUpdate() as TUpdateUserData;
 
@@ -58,6 +68,12 @@ userSchema.pre("findOneAndUpdate", async function (next) {
 });
 
 userSchema.post("find", async function (doc, next) {
+  doc.forEach((item: TUser) => {
+    item.password = "";
+  });
+  next();
+});
+userSchema.post("findOne", async function (doc, next) {
   doc.forEach((item: TUser) => {
     item.password = "";
   });
