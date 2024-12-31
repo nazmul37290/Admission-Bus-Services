@@ -68,7 +68,7 @@ const updateBus = catchAsync(async (req: Request, res: Response) => {
   }
 });
 const deleteBus = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.routeId;
+  const id = req.params.busId;
   const result = await BusServices.deleteBusFromDb(id);
   if (result) {
     res.status(200).json({
