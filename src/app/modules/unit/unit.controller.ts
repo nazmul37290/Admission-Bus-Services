@@ -11,14 +11,22 @@ const createUnit = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
 const getAllUnits = catchAsync(async (req: Request, res: Response) => {
-  const result = await UnitServices.getAllUnitsFromDb();
-  res.status(200).json({
-    success: true,
-    message: "All Units retrieved successfully",
-    data: result,
-  });
+  const query = req.query;
+  const result = await UnitServices.getAllUnitsFromDb(query);
+  if (result?.length) {
+    res.status(200).json({
+      success: true,
+      message: "All Units retrieved successfully",
+      data: result,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "No Units found",
+      data: null,
+    });
+  }
 });
 const getSingleUnit = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.unitId;
