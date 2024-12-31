@@ -15,12 +15,21 @@ const createBus = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllBuses = catchAsync(async (req: Request, res: Response) => {
-  const result = await BusServices.getAllBusesFromDb();
-  res.status(200).json({
-    success: true,
-    message: "Buses retrieved successfully",
-    data: result,
-  });
+  const query = req.query;
+  const result = await BusServices.getAllBusesFromDb(query);
+  if (result?.length) {
+    res.status(200).json({
+      success: true,
+      message: "Buses retrieved successfully",
+      data: result,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "No buses found",
+      data: null,
+    });
+  }
 });
 const getSingleBus = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.busId;

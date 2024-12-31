@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { TBus } from "./Bus.interface";
+import { AppError } from "../../errors/AppError";
 
 const busSchema = new Schema<TBus>(
   {
@@ -16,6 +17,7 @@ const busSchema = new Schema<TBus>(
     busName: {
       type: String,
       required: true,
+      unique: true,
     },
     tripName: {
       type: String,
@@ -79,5 +81,13 @@ const busSchema = new Schema<TBus>(
   },
   { timestamps: true }
 );
+
+busSchema.pre("save", async function (next) {
+  const data = await busModel.findOne({ busName: this.busName });
+  if (data) {
+    throw new AppError(409, "Bus name already exists");
+  }
+  next();
+});
 
 export const busModel = model<TBus>("Bus", busSchema);

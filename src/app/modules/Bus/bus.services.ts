@@ -8,8 +8,31 @@ const createBusIntoDb = async (busData: TBus) => {
   return result;
 };
 
-const getAllBusesFromDb = async () => {
-  const result = await busModel.find({ isDeleted: false });
+const getAllBusesFromDb = async (query: Record<string, unknown>) => {
+  let queryObj;
+  if (query) {
+    queryObj = query;
+  }
+
+  const result = await busModel.aggregate([
+    {
+      $lookup: {
+        from: "units", // The name of the Unit collection
+        localField: "unitId", // Field in the Bus collection
+        foreignField: "_id", // Field in the Unit collection
+        as: "unitDetails", // Alias for the joined data
+      },
+    },
+    {
+      $unwind: "$unitDetails", // Flatten the array from $lookup
+    },
+    {
+      $match: {
+        ...(queryObj?.unit ? { "unitDetails.id": queryObj?.unit } : {}),
+        isDeleted: false, // Match the unitId.id field
+      },
+    },
+  ]);
   return result;
 };
 

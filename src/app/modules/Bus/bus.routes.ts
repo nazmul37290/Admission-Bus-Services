@@ -12,12 +12,12 @@ router.post(
   BusController.createBus
 );
 router.get("/", BusController.getAllBuses);
-router.get("/:routeId", BusController.getSingleBus);
+router.get("/:busId", BusController.getSingleBus);
 router.patch(
-  "/:routeId",
+  "/:busId",
   validateRequest(BusValidations.updateBusValidationSchema),
   BusController.updateBus
 );
-router.delete("/:routeId", BusController.deleteBus);
+router.delete("/:busId", BusController.deleteBus);
 
 export const BusRouter = router;
