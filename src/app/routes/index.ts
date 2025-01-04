@@ -4,6 +4,7 @@ import { UnitRouter } from "../modules/unit/unit.route";
 import { BusRouter } from "../modules/Bus/bus.routes";
 import { UserRoutes } from "../modules/user/user.routes";
 import { BookingRoutes } from "../modules/booking/booking.route";
+import { DuaRoutes } from "../modules/duas/dua.routes";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -26,6 +27,10 @@ const moduleRoutes = [
   {
     path: "/bookings",
     routes: BookingRoutes,
+  },
+  {
+    path: "/duas",
+    routes: DuaRoutes,
   },
 ];
 
