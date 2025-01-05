@@ -15,7 +15,6 @@ const createBusValidationSchema = z.object({
       required_error: "Total Seats is required",
       invalid_type_error: "Total Seats must be a number",
     }),
-    bookedSeats: z.array(z.string()),
     routeId: z.string({
       required_error: "Route ID is required",
       invalid_type_error: "Route ID must be a string",

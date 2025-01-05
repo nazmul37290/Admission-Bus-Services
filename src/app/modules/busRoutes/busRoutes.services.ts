@@ -4,7 +4,7 @@ import { busRoutesModel } from "./busRoutes.model";
 
 const createBusRoutesIntoDb = async (busRouteData: TBusRoutes) => {
   busRouteData.id = await generateUniqueId(busRoutesModel);
-  const result = busRoutesModel.create(busRouteData);
+  const result = await busRoutesModel.create(busRouteData);
   return result;
 };
 

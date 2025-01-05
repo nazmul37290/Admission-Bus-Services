@@ -4,7 +4,7 @@ import { userModel } from "./user.model";
 
 const createUserIntoDb = async (userData: TUser) => {
   userData.id = await generateUniqueId(userModel);
-  const result = userModel.create(userData);
+  const result = await userModel.create(userData);
   return result;
 };
 

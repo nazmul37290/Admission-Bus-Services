@@ -4,7 +4,7 @@ import { unitModel } from "./unit.model";
 
 const createUnitIntoDb = async (unitData: TUnit) => {
   unitData.id = await generateUniqueId(unitModel);
-  const result = unitModel.create(unitData);
+  const result = await unitModel.create(unitData);
   return result;
 };
 

@@ -109,3 +109,65 @@ export const duas = [
     },
   },
 ];
+
+export const categories = [
+  {
+    id: 1,
+    name: "Clothes",
+    name_bangla: "কাপড়",
+    dua_id: [1, 2, 3],
+    parent_id: null,
+  },
+  {
+    id: 2,
+    name: "Ablution",
+    name_bangla: "ওযু",
+    dua_id: [4],
+    parent_id: null,
+  },
+  {
+    id: 3,
+    name: "Before removing clothes",
+    name_bangla: "কাপড় খুলার আগে",
+    dua_id: [1, 2],
+    parent_id: 1,
+  },
+  {
+    id: 4,
+    name: "When wearing new clothes",
+    name_bangla: "নতুন কাপড় পরার সময়",
+    dua_id: [3],
+    parent_id: 1,
+  },
+  {
+    id: 5,
+    name: "Before removing clothes ablution",
+    name_bangla: "কাপড় খুলার আগে অবলুক্ষণ",
+    dua_id: [4],
+    parent_id: 2,
+  },
+];
+
+export const homeSlider = [
+  {
+    title: "Grant me a blissful family",
+    title_bangla: "আমাকে এক সুখী পরিবার দান করুন",
+    des: "Oh my lord! Grant unto us wives and offspring who will be the comfort of our eyes. wives and offspring who will be the comfort of our eyes.",
+    des_bangla:
+      "হে প্রভু! আমাদের এমন স্ত্রী এবং সন্তান দান করুন যারা আমাদের চোখের আরাম হবে। স্ত্রী এবং সন্তান যারা আমাদের চোখের আরাম হবে।",
+  },
+  {
+    title: "Teach Me How To Win This",
+    title_bangla: "আমাকে এটি জিততে শিখাও",
+    des: "Oh The Most Patient, enable me to be patient upon whatever you afflict and test me with.",
+    des_bangla:
+      "হে সর্বাধিক ধৈর্যশীল, আমাকে যে কোন কষ্ট এবং পরীক্ষার মধ্যে ধৈর্য ধরতে সাহায্য কর।",
+  },
+  {
+    title: "Grant me a blissful family",
+    title_bangla: "আমাকে এক সুখী পরিবার দান করুন",
+    des: "Oh my lord! Grant unto us wives and offspring who will be the comfort of our eyes. wives and offspring who will be the comfort of our eyes.",
+    des_bangla:
+      "হে প্রভু! আমাদের এমন স্ত্রী এবং সন্তান দান করুন যারা আমাদের চোখের আরাম হবে। স্ত্রী এবং সন্তান যারা আমাদের চোখের আরাম হবে।",
+  },
+];

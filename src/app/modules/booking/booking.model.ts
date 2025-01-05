@@ -33,7 +33,6 @@ const bookingSchema = new Schema<TBooking>(
     },
     pnrNumber: {
       type: String,
-      required: true,
       unique: true,
     },
     busId: {
