@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 router.get("/categories", (req, res) => {
   res.status(200).json(categories);
 });
-router.get("/home-slider", (req, res) => {
+router.get("/sliders", (req, res) => {
   res.status(200).json(homeSlider);
 });
 
