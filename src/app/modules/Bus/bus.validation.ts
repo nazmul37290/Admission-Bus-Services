@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const createBusValidationSchema = z.object({
   body: z.object({
-    busType: z.enum(["AC", "Non AC"]),
+    busType: z.enum(["AC", "Non-AC"]),
     busName: z.string({
       required_error: "Bus Name is required",
       invalid_type_error: "Bus name must be a string",
@@ -56,7 +56,7 @@ const createBusValidationSchema = z.object({
 
 const updateBusValidationSchema = z.object({
   body: z.object({
-    busType: z.enum(["AC", "Non AC"]).optional(),
+    busType: z.enum(["AC", "Non-AC"]).optional(),
     busName: z
       .string({
         required_error: "Bus Name is required",

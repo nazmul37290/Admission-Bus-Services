@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { generateUniqueId } from "../../utils/generateUniqueId";
 import { TUnit } from "./unit.interface";
 import { unitModel } from "./unit.model";
@@ -13,6 +14,7 @@ const getAllUnitsFromDb = async (query: Record<string, unknown>) => {
   if (query) {
     queryObj = query;
   }
+  console.log(queryObj);
   const result = await unitModel.aggregate([
     {
       $lookup: {
@@ -27,7 +29,13 @@ const getAllUnitsFromDb = async (query: Record<string, unknown>) => {
     },
     {
       $match: {
-        ...(queryObj?.route ? { "routeDetails.id": queryObj?.route } : {}),
+        ...(queryObj?.route
+          ? {
+              "routeDetails._id": new mongoose.Types.ObjectId(
+                queryObj.route as string
+              ),
+            }
+          : {}),
         isDeleted: false, // Match the unitId.id field
       },
     },
@@ -37,7 +45,7 @@ const getAllUnitsFromDb = async (query: Record<string, unknown>) => {
 };
 
 const getSingleUnitFromDb = async (id: string) => {
-  const result = await unitModel.findOne({ id });
+  const result = await unitModel.findOne({ id }).populate("routeId");
   return result;
 };
 

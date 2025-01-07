@@ -5,6 +5,8 @@ import { BusRouter } from "../modules/Bus/bus.routes";
 import { UserRoutes } from "../modules/user/user.routes";
 import { BookingRoutes } from "../modules/booking/booking.route";
 import { DuaRoutes } from "../modules/duas/dua.routes";
+import { ticketRoutes } from "../modules/ticket/ticket.routes";
+import { authRoutes } from "../modules/Authentication/auth.route";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -31,6 +33,14 @@ const moduleRoutes = [
   {
     path: "/duas",
     routes: DuaRoutes,
+  },
+  {
+    path: "/ticket",
+    routes: ticketRoutes,
+  },
+  {
+    path: "/auth",
+    routes: authRoutes,
   },
 ];
 

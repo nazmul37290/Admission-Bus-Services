@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 
 export type TBus = {
   id: string;
-  busType: "AC" | "Non AC";
+  busType: "AC" | "Non-AC";
   busName: string;
   tripName: string;
   totalSeats: number;

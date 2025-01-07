@@ -8,13 +8,10 @@ import { busModel } from "../Bus/bus.model";
 
 const createBookingIntoDb = async (bookingData: TBooking) => {
   bookingData.id = await generateUniqueId(bookingModel);
-  console.log(bookingData.busId);
-  console.log(bookingData.seats);
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
     const booking = await bookingModel.create([bookingData], { session });
-    console.log(booking, "booking details");
     if (!booking.length) {
       throw new AppError(400, "Cannot book tickets");
     }

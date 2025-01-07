@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { TBooking } from "./booking.interface";
 import { AppError } from "../../errors/AppError";
 import { generatePnrNumber } from "./booking.utils";
+import { busModel } from "../Bus/bus.model";
 
 const bookingSchema = new Schema<TBooking>(
   {
@@ -37,7 +38,7 @@ const bookingSchema = new Schema<TBooking>(
     },
     busId: {
       type: Schema.Types.ObjectId,
-      ref: "busModel",
+      ref: "Bus",
       required: true,
     },
     seats: {
@@ -62,6 +63,14 @@ const bookingSchema = new Schema<TBooking>(
 );
 
 bookingSchema.pre("save", async function (next) {
+  const data = await busModel.findOne({ _id: this.busId });
+  console.log(data);
+  console.log(this);
+  const result = this.seats.some((seat) => data?.bookedSeats.includes(seat));
+  console.log(result);
+  if (result) {
+    throw new AppError(400, "Selected seats are already booked");
+  }
   const isDuplicateTransactionId = await bookingModel.findOne({
     transactionId: this?.transactionId,
   });

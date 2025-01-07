@@ -11,7 +11,7 @@ const busSchema = new Schema<TBus>(
     },
     busType: {
       type: String,
-      enum: ["AC", "Non AC"],
+      enum: ["AC", "Non-AC"],
       required: true,
     },
     busName: {
