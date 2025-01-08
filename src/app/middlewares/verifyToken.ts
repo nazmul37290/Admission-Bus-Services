@@ -8,7 +8,6 @@ interface AuthRequest extends Request {
 }
 const verifyToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
-  console.log(token, "from middleware");
   if (!token) {
     res.status(401).json({ message: "Access Denied" });
   }

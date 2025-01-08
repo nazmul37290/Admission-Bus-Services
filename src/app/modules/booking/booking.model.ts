@@ -64,10 +64,9 @@ const bookingSchema = new Schema<TBooking>(
 
 bookingSchema.pre("save", async function (next) {
   const data = await busModel.findOne({ _id: this.busId });
-  console.log(data);
-  console.log(this);
+
   const result = this.seats.some((seat) => data?.bookedSeats.includes(seat));
-  console.log(result);
+
   if (result) {
     throw new AppError(400, "Selected seats are already booked");
   }

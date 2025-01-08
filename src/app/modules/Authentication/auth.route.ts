@@ -6,9 +6,6 @@ const router = express.Router();
 
 router.post("/login", AuthController.checkUser);
 
-// router.post("/check", () => {
-//   console.log("route hit");
-// });
 router.post("/check", verifyToken, AuthController.verify);
 
 export const authRoutes = router;

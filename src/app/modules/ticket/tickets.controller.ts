@@ -4,7 +4,6 @@ import { TicketServices } from "./tickets.services";
 
 const getTicket = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
-  console.log(query, "from controller");
   const result = await TicketServices.getTicketFromDb(query);
   if (result) {
     res.status(200).json({

@@ -14,7 +14,7 @@ const getAllUnitsFromDb = async (query: Record<string, unknown>) => {
   if (query) {
     queryObj = query;
   }
-  console.log(queryObj);
+
   const result = await unitModel.aggregate([
     {
       $lookup: {
