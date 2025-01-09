@@ -6,7 +6,12 @@ import notFoundRoute from "./app/middlewares/notFound";
 const app: Application = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://bus-services-client.vercel.app"],
+    credentials: true,
+  })
+);
 
 app.use("/api", router);
 app.get("/", (req: Request, res: Response) => {
