@@ -54,11 +54,7 @@ const callBackController = async (req: Request, res: Response) => {
       );
     }
   } else {
-    res.status(400).json({
-      success: false,
-      message: "Payment processing failed",
-      data: result,
-    });
+    res.redirect(`${config.client_url}/payment/error?message=${result.status}`);
   }
 };
 
