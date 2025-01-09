@@ -6,6 +6,7 @@ import { getToken } from "../../utils/paymentTokenManager";
 const createPayment = async (amount: string) => {
   const id_token = getToken();
   const invoice = generateUniqueNumber();
+  console.log(id_token);
   const result = await axios.post(
     `https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/create`,
     {

@@ -10,7 +10,10 @@ const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalEr
 const notFound_1 = __importDefault(require("./app/middlewares/notFound"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: ["http://localhost:5173", "https://bus-services-client.vercel.app"],
+    credentials: true,
+}));
 app.use("/api", routes_1.default);
 app.get("/", (req, res) => {
     res.send("Bus is running too fast!! 🚌");

@@ -11,6 +11,7 @@ const createPaymentController = catchAsync(
     const { amount } = req.body;
 
     const result = await paymentServices.createPayment(amount);
+    console.log("payment created");
     res.status(200).json({
       success: true,
       message: "Payment created successfully",
