@@ -10,6 +10,8 @@ app.use(
   cors({
     origin: ["http://localhost:5173", "https://bus-services-client.vercel.app"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Ensure login requests are allowed
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow authentication headers
   })
 );
 // commented

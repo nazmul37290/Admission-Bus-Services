@@ -14,6 +14,7 @@ app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://bus-services-client.vercel.app"],
     credentials: true,
 }));
+// commented
 app.use("/api", routes_1.default);
 app.get("/", (req, res) => {
     res.send("Bus is running too fast!! 🚌");
