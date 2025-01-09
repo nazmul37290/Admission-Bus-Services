@@ -12,7 +12,7 @@ app.use(
     credentials: true,
   })
 );
-
+// commented
 app.use("/api", router);
 app.get("/", (req: Request, res: Response) => {
   res.send("Bus is running too fast!! 🚌");
