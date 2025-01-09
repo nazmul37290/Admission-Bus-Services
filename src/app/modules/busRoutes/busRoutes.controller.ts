@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import { BusRouteServices } from "./busRoutes.services";
 import catchAsync from "../../utils/catchAsync";

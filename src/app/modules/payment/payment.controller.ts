@@ -22,9 +22,8 @@ const createPaymentController = catchAsync(
 const callBackController = async (req: Request, res: Response) => {
   const id_token = getToken();
   const result = req.query;
-  console.log(result);
+
   if (result?.status === "success") {
-    console.log("success");
     try {
       const data = await axios.post(
         `${config.bkash_base_url}/execute`,
