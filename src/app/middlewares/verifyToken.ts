@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import config from "../config";
+import jwt from "jsonwebtoken";
 interface AuthRequest extends Request {
-  user?: any; // Adjust `any` to the expected type (e.g., `UserPayload`)
+  user?: any;
 }
 const verifyToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
