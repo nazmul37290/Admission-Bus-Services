@@ -13,6 +13,8 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://bus-services-client.vercel.app"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Ensure login requests are allowed
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow authentication headers
 }));
 // commented
 app.use("/api", routes_1.default);
