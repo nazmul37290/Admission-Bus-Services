@@ -5,18 +5,28 @@ import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import notFoundRoute from "./app/middlewares/notFound";
 const app: Application = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://bus-services-client.vercel.app",
+];
+
 app.use(express.json());
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://bus-services-client.vercel.app,",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    // allowedHeaders: [
+    //   "Content-Type",
+    //   "Authorization",
+    //   "Origin",
+    //   "Accept",
+    //   "X-Requested-With",
+    // ],
   })
 );
-// commented
+
 app.use("/api", router);
 app.get("/", (req: Request, res: Response) => {
   res.send("Bus is running too fast!! 🚌");
