@@ -8,9 +8,12 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "*", // Frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+    origin: [
+      "http://localhost:5173",
+      "https://bus-services-client.vercel.app,",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 // commented

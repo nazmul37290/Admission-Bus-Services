@@ -11,7 +11,7 @@ const notFound_1 = __importDefault(require("./app/middlewares/notFound"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: "*", // Frontend URL
+    origin: true, // Frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 }));
