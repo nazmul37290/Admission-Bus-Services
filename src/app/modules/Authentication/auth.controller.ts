@@ -4,7 +4,7 @@ import { authServices } from "./auth.services";
 
 const checkUser = catchAsync(async (req: Request, res: Response) => {
   const user = req.body;
-  console.log(user);
+
   const result = await authServices.checkUserFromDb(user);
 
   res.status(200).json({

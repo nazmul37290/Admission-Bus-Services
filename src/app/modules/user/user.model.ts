@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { TUpdateUserData, TUser } from "./user.interface";
 import { AppError } from "../../errors/AppError";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import config from "../../config";
 
 const userSchema = new Schema<TUser>(
