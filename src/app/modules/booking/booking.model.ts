@@ -27,10 +27,13 @@ const bookingSchema = new Schema<TBooking>(
       enum: ["male", "female", "other"],
       required: true,
     },
+    paymentMethod: {
+      type: String,
+      enum: ["bkash", "cash"],
+      required: true,
+    },
     transactionId: {
       type: String,
-      required: true,
-      unique: true,
     },
     pnrNumber: {
       type: String,
@@ -70,16 +73,9 @@ bookingSchema.pre("save", async function (next) {
   if (result) {
     throw new AppError(400, "Selected seats are already booked");
   }
-  const isDuplicateTransactionId = await bookingModel.findOne({
-    transactionId: this?.transactionId,
-  });
-  if (isDuplicateTransactionId) {
-    throw new AppError(409, "Duplicate transaction Id");
-  }
-
   let isDuplicatePnr: boolean = true;
   while (isDuplicatePnr) {
-    this.pnrNumber = generatePnrNumber(this.contactNumber, this.transactionId);
+    this.pnrNumber = generatePnrNumber(this.contactNumber, this.name);
     const duplicatePnrDoc = await bookingModel.findOne({
       pnrNumber: this?.pnrNumber,
     });

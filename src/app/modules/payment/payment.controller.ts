@@ -6,12 +6,32 @@ import axios from "axios";
 import config from "../../config";
 import { getToken } from "../../utils/paymentTokenManager";
 
+const createPaymentToDbController = catchAsync(
+  async (req: Request, res: Response) => {
+    const paymentData = req.body;
+    const result = await paymentServices.createPaymentIntoDb(paymentData);
+    res.status(200).json({
+      success: true,
+      message: "Payment created successfully",
+      data: result,
+    });
+  }
+);
+
+const getAllPayments = catchAsync(async (req: Request, res: Response) => {
+  const result = await paymentServices.getAllPaymentsFromDb();
+  res.status(200).json({
+    success: true,
+    message: "All Payments retrieved successfully",
+    data: result,
+  });
+});
+
 const createPaymentController = catchAsync(
   async (req: Request, res: Response) => {
     const { amount } = req.body;
 
     const result = await paymentServices.createPayment(amount);
-    console.log("payment created");
     res.status(200).json({
       success: true,
       message: "Payment created successfully",
@@ -59,6 +79,8 @@ const callBackController = async (req: Request, res: Response) => {
 };
 
 export const PaymentController = {
+  createPaymentToDbController,
+  getAllPayments,
   createPaymentController,
   callBackController,
 };

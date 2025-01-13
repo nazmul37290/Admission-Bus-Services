@@ -8,14 +8,17 @@ import { busModel } from "../Bus/bus.model";
 
 const createBookingIntoDb = async (bookingData: TBooking) => {
   bookingData.id = await generateUniqueId(bookingModel);
+  // const result = await bookingModel.create(bookingData);
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
-    const booking = await bookingModel.create([bookingData], { session });
-    if (!booking.length) {
-      throw new AppError(400, "Cannot book tickets");
-    }
 
+    const booking = await bookingModel.create([bookingData], { session });
+    // if (!booking.length) {
+    //   throw new AppError(400, "Cannot book tickets");
+    // }
+    console.log(booking);
+    console.log("passed first session");
     const bookedSeatsCount = bookingData?.seats.length;
     const bookedSeatNumbers = bookingData?.seats;
     const updateBusDetails = await busModel.findByIdAndUpdate(
@@ -23,7 +26,8 @@ const createBookingIntoDb = async (bookingData: TBooking) => {
       {
         // $inc: { totalSeats: -bookedSeatsCount },
         $addToSet: { bookedSeats: { $each: bookedSeatNumbers } },
-      }
+      },
+      { session }
     );
     if (!updateBusDetails) {
       throw new AppError(500, "Failed to update bus details");
@@ -33,6 +37,7 @@ const createBookingIntoDb = async (bookingData: TBooking) => {
     await session.endSession();
     return booking;
   } catch (err) {
+    console.log(err);
     await session.abortTransaction();
     await session.endSession();
     throw new AppError(500, "Failed to create booking");

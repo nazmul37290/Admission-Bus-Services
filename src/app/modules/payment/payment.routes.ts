@@ -4,6 +4,8 @@ import bkashGrantTokenAuth from "../../middlewares/bkashGrantTokenAuth";
 
 const router = express.Router();
 
+router.post("/create-payment", PaymentController.createPaymentToDbController);
+router.get("/", PaymentController.getAllPayments);
 router.post(
   "/bkash/create",
   bkashGrantTokenAuth,

@@ -16,10 +16,13 @@ const createBookingValidationSchema = z.object({
       })
       .optional(),
     gender: z.enum(["male", "female", "other"]),
-    transactionId: z.string({
-      required_error: "Transaction ID is required",
-      invalid_type_error: "Transaction ID should be a string",
-    }),
+    paymentMethod: z.enum(["bkash", "cash"]),
+    transactionId: z
+      .string({
+        required_error: "Transaction ID is required",
+        invalid_type_error: "Transaction ID should be a string",
+      })
+      .optional(),
     busId: z.string({
       required_error: "Bus ID is required",
       invalid_type_error: "Bus ID should be a string",
@@ -52,6 +55,7 @@ const updateBookingValidationSchema = z.object({
       })
       .optional(),
     gender: z.enum(["male", "female", "other"]).optional(),
+    // paymentMethod: z.enum(["bkash", "cash"]).optional(),
     transactionId: z
       .string({
         required_error: "Transaction ID is required",

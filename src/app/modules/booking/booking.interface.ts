@@ -6,10 +6,11 @@ export type TBooking = {
   contactNumber: string;
   email?: string;
   gender: "male" | "female" | "other";
-  transactionId: string;
+  transactionId?: string;
   pnrNumber: string;
   busId: Types.ObjectId;
   seats: Array<string>;
+  paymentMethod: "bkash" | "cash";
   totalPrice: number;
   status: "booked" | "cancelled";
   isDeleted: boolean;
