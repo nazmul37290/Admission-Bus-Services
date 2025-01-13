@@ -5,6 +5,7 @@ import { TBooking } from "./booking.interface";
 import { bookingModel } from "./booking.model";
 import { AppError } from "../../errors/AppError";
 import { busModel } from "../Bus/bus.model";
+import { PaymentModel } from "../payment/payment.model";
 
 const createBookingIntoDb = async (bookingData: TBooking) => {
   bookingData.id = await generateUniqueId(bookingModel);
@@ -14,17 +15,13 @@ const createBookingIntoDb = async (bookingData: TBooking) => {
     session.startTransaction();
 
     const booking = await bookingModel.create([bookingData], { session });
-    // if (!booking.length) {
-    //   throw new AppError(400, "Cannot book tickets");
-    // }
-    console.log(booking);
-    console.log("passed first session");
-    const bookedSeatsCount = bookingData?.seats.length;
+    if (!booking.length) {
+      throw new AppError(400, "Cannot book tickets");
+    }
     const bookedSeatNumbers = bookingData?.seats;
     const updateBusDetails = await busModel.findByIdAndUpdate(
       bookingData?.busId,
       {
-        // $inc: { totalSeats: -bookedSeatsCount },
         $addToSet: { bookedSeats: { $each: bookedSeatNumbers } },
       },
       { session }
@@ -33,11 +30,21 @@ const createBookingIntoDb = async (bookingData: TBooking) => {
       throw new AppError(500, "Failed to update bus details");
     }
 
+    const addPaymentData = await PaymentModel.create(
+      {
+        bookingId: booking[0]._id,
+        paymentMethod: booking[0].paymentMethod,
+      },
+      { session }
+    );
+    if (!addPaymentData) {
+      throw new AppError(500, "Failed to create payment details");
+    }
+
     await session.commitTransaction();
     await session.endSession();
     return booking;
   } catch (err) {
-    console.log(err);
     await session.abortTransaction();
     await session.endSession();
     throw new AppError(500, "Failed to create booking");

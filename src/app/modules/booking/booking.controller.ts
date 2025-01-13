@@ -2,22 +2,16 @@ import { Request, Response } from "express";
 
 import catchAsync from "../../utils/catchAsync";
 import { BookingServices } from "./booking.services";
-import { PaymentModel } from "../payment/payment.model";
+
 import { AppError } from "../../errors/AppError";
 
 const createBooking = catchAsync(async (req: Request, res: Response) => {
   const bookingData = req.body;
-  console.log(bookingData, "bookingData");
   if (bookingData.paymentMethod != "cash" && !bookingData.transactionId) {
     throw new AppError(400, "Transaction id is required");
   }
   const result = await BookingServices.createBookingIntoDb(bookingData);
-  if (result) {
-    await PaymentModel.create({
-      bookingId: result[0]._id,
-      paymentMethod: result[0].paymentMethod,
-    });
-  }
+
   res.status(200).json({
     success: true,
     message: "Seats booked successfully",

@@ -10,7 +10,7 @@ const paymentSchema = new Schema<TPayment>(
     },
     paymentMethod: {
       type: String,
-      enum: ["Bkash", "cash"],
+      enum: ["bkash", "cash"],
       required: true,
     },
   },
