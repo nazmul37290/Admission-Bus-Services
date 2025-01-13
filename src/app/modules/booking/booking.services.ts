@@ -31,10 +31,12 @@ const createBookingIntoDb = async (bookingData: TBooking) => {
     }
 
     const addPaymentData = await PaymentModel.create(
-      {
-        bookingId: booking[0]._id,
-        paymentMethod: booking[0].paymentMethod,
-      },
+      [
+        {
+          bookingId: booking[0]._id,
+          paymentMethod: booking[0].paymentMethod,
+        },
+      ],
       { session }
     );
     if (!addPaymentData) {
