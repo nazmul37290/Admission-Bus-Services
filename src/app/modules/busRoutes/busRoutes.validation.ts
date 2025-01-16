@@ -6,10 +6,12 @@ const createBusRouteValidationSchema = z.object({
       invalid_type_error: "Exam Name should be a string",
       required_error: "Exam name is required",
     }),
-    examCenterName: z.string({
-      invalid_type_error: "Exam center Name should be a string",
-      required_error: "Exam center name is required",
-    }),
+    examCenterName: z
+      .string({
+        invalid_type_error: "Exam center Name should be a string",
+        required_error: "Exam center name is required",
+      })
+      .optional(),
     destinationImage: z
       .string({
         invalid_type_error: "Destination image url should be a string",

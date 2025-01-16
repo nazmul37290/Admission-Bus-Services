@@ -4,6 +4,9 @@ import catchAsync from "../../utils/catchAsync";
 
 const createBusRoutes = catchAsync(async (req: Request, res: Response) => {
   const busRouteData = req.body;
+  const file = req.file;
+  busRouteData.destinationImage = `${file?.path}`;
+
   const result = await BusRouteServices.createBusRoutesIntoDb(busRouteData);
   res.status(200).json({
     success: true,

@@ -3,13 +3,16 @@ import cors from "cors";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import notFoundRoute from "./app/middlewares/notFound";
+
+import path from "path";
+import { cwd } from "process";
 const app: Application = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
   "https://bus-services-client.vercel.app",
 ];
-
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(
@@ -27,6 +30,7 @@ app.use(
   })
 );
 
+app.use("/api/uploads", express.static(path.join(cwd(), "uploads")));
 app.use("/api", router);
 app.get("/", (req: Request, res: Response) => {
   res.send("Bus is running too fast!! 🚌");
