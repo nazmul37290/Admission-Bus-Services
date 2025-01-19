@@ -129,10 +129,10 @@ const getRevenueFromBookings = async (dayCount: number | undefined) => {
           {
             $group: {
               _id: {
-                paymentMethod: "$paymentMethod",
                 date: {
                   $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
                 },
+                paymentMethod: "$paymentMethod",
               },
               totalRevenue: { $sum: "$totalPrice" },
               totalBookings: { $sum: 1 },
