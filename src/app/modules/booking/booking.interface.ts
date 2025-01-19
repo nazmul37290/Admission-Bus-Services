@@ -1,5 +1,15 @@
 import { Types } from "mongoose";
 
+export type TMatchCondition = {
+  isDeleted: boolean;
+  createdAt?: {
+    $gte?: Date;
+    $lte?: Date;
+    $gt?: Date;
+    $lt?: Date;
+  };
+};
+
 export type TBooking = {
   id: string;
   name: string;

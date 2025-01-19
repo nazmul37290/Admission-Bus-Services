@@ -54,6 +54,18 @@ const getSingleBooking = catchAsync(async (req: Request, res: Response) => {
   }
 });
 
+const getRevenue = catchAsync(async (req: Request, res: Response) => {
+  const timePeriod = req?.query?.timePeriod;
+  const result = await BookingServices.getRevenueFromBookings(
+    Number(timePeriod)
+  );
+  res.status(200).json({
+    success: true,
+    message: "Revenue retrieved successfully",
+    data: result[0],
+  });
+});
+
 const updateBooking = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.bookingId;
   const updatedData = req.body;
@@ -94,6 +106,7 @@ export const BookingController = {
   createBooking,
   getAllBookings,
   getSingleBooking,
+  getRevenue,
   updateBooking,
   deleteBooking,
 };

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import mongoose from "mongoose";
 import { generateUniqueId } from "../../utils/generateUniqueId";
-import { TBooking } from "./booking.interface";
+import { TBooking, TMatchCondition } from "./booking.interface";
 import { bookingModel } from "./booking.model";
 import { AppError } from "../../errors/AppError";
 import { busModel } from "../Bus/bus.model";
@@ -106,6 +106,80 @@ const getSingleBookingFromDb = async (id: string) => {
   return result;
 };
 
+const getRevenueFromBookings = async (dayCount: number | undefined) => {
+  const matchCondition: TMatchCondition = {
+    isDeleted: false,
+  };
+  if (dayCount)
+    matchCondition.createdAt = {
+      $gte: new Date(new Date().setDate(new Date().getDate() - dayCount)),
+    };
+  const result = await bookingModel.aggregate([
+    {
+      $match: matchCondition,
+    },
+    {
+      $facet: {
+        revenueByPaymentMethod: [
+          {
+            $match: {
+              status: "booked",
+            },
+          },
+          {
+            $group: {
+              _id: {
+                paymentMethod: "$paymentMethod",
+                date: {
+                  $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                },
+              },
+              totalRevenue: { $sum: "$totalPrice" },
+              totalBookings: { $sum: 1 },
+            },
+          },
+        ],
+        totalRevenue: [
+          {
+            $match: {
+              status: "booked",
+            },
+          },
+          {
+            $group: {
+              _id: null, // No grouping, compute total revenue for all records
+              totalRevenue: { $sum: "$totalPrice" }, // Sum total price
+              totalBookings: { $sum: 1 }, // Count all bookings
+              // Count all bookings
+            },
+          },
+        ],
+        cancelCount: [
+          {
+            $match: {
+              status: "cancelled",
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              cancelledCount: {
+                $sum: 1,
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+            },
+          },
+        ],
+      },
+    },
+  ]);
+  return result;
+};
+
 const updateBookingIntoDb = async (id: string, payload: Partial<TBooking>) => {
   const result = await bookingModel.findOneAndUpdate({ id }, payload, {
     new: true,
@@ -126,6 +200,7 @@ export const BookingServices = {
   createBookingIntoDb,
   getAllBookingsFromDb,
   getSingleBookingFromDb,
+  getRevenueFromBookings,
   updateBookingIntoDb,
   deleteBookingFromDb,
 };
