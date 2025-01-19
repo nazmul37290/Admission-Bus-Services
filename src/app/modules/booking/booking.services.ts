@@ -140,7 +140,7 @@ const getRevenueFromBookings = async (dayCount: number | undefined) => {
           },
           {
             $sort: {
-              date: 1,
+              "_id.date": 1,
             },
           },
         ],
@@ -152,10 +152,9 @@ const getRevenueFromBookings = async (dayCount: number | undefined) => {
           },
           {
             $group: {
-              _id: null, // No grouping, compute total revenue for all records
-              totalRevenue: { $sum: "$totalPrice" }, // Sum total price
-              totalBookings: { $sum: 1 }, // Count all bookings
-              // Count all bookings
+              _id: null,
+              totalRevenue: { $sum: "$totalPrice" },
+              totalBookings: { $sum: 1 },
             },
           },
         ],
