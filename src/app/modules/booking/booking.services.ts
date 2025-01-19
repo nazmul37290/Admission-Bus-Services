@@ -138,6 +138,11 @@ const getRevenueFromBookings = async (dayCount: number | undefined) => {
               totalBookings: { $sum: 1 },
             },
           },
+          {
+            $sort: {
+              date: 1,
+            },
+          },
         ],
         totalRevenue: [
           {
