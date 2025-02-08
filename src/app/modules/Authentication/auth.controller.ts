@@ -16,7 +16,6 @@ const checkUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 const verify = (req: AuthRequest, res: Response) => {
-  console.log(req.user);
   res.status(200).json({
     success: true,
     message: "User is logged in !",

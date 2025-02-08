@@ -7,7 +7,7 @@ import config from "../../config";
 const checkUserFromDb = async (userData: TAuthUser) => {
   const { email, password } = userData;
   const user = await userModel.findOne({ email: email, isDeleted: false });
-  console.log(user, "user from check db");
+
   if (!user) {
     throw new AppError(404, "User not found");
   }
