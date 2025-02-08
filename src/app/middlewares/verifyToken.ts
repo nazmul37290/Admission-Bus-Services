@@ -3,7 +3,7 @@
 import { NextFunction, Request, Response } from "express";
 import config from "../config";
 import jwt from "jsonwebtoken";
-interface AuthRequest extends Request {
+export interface AuthRequest extends Request {
   user?: any;
 }
 const verifyToken = (req: AuthRequest, res: Response, next: NextFunction) => {

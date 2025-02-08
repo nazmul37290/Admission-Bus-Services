@@ -7,7 +7,7 @@ import config from "../../config";
 const checkUserFromDb = async (userData: TAuthUser) => {
   const { email, password } = userData;
   const user = await userModel.findOne({ email: email, isDeleted: false });
-
+  console.log(user, "user from check db");
   if (!user) {
     throw new AppError(404, "User not found");
   }
@@ -16,10 +16,13 @@ const checkUserFromDb = async (userData: TAuthUser) => {
   if (!isMatch) {
     throw new AppError(401, "Invalid credentials");
   }
-
-  const token = jwt.sign({ email }, config.jwt_token_secret as string, {
-    expiresIn: "12h",
-  });
+  const token = jwt.sign(
+    { email, userName: user.userName },
+    config.jwt_token_secret as string,
+    {
+      expiresIn: "12h",
+    }
+  );
   return { user, token };
 };
 

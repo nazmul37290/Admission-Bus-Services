@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
 import { authServices } from "./auth.services";
+import { AuthRequest } from "../../middlewares/verifyToken";
 
 const checkUser = catchAsync(async (req: Request, res: Response) => {
   const user = req.body;
@@ -14,8 +15,13 @@ const checkUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const verify = (req: Request, res: Response) => {
-  res.status(200).json({ message: "Protected data accessed!" });
+const verify = (req: AuthRequest, res: Response) => {
+  console.log(req.user);
+  res.status(200).json({
+    success: true,
+    message: "User is logged in !",
+    data: req.user,
+  });
 };
 export const AuthController = {
   checkUser,
