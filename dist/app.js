@@ -21,13 +21,6 @@ app.use((0, cors_1.default)({
     origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    // allowedHeaders: [
-    //   "Content-Type",
-    //   "Authorization",
-    //   "Origin",
-    //   "Accept",
-    //   "X-Requested-With",
-    // ],
 }));
 app.use("/api/uploads", express_1.default.static(path_1.default.join((0, process_1.cwd)(), "uploads")));
 app.use("/api", routes_1.default);
