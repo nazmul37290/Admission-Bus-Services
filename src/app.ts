@@ -11,6 +11,7 @@ const app: Application = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://bus-services-client.vercel.app",
+  "http://busservice-frontend-xxk9hz-b91cde-159-223-41-30.traefik.me",
 ];
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
