@@ -19,14 +19,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      console.log("🔍 Origin request received from:", origin);
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   })
