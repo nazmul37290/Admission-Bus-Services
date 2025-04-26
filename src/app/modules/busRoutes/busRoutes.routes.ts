@@ -3,10 +3,8 @@ import { BusRouteController } from "./busRoutes.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { BusRouteValidations } from "./busRoutes.validation";
 import { upload } from "../../utils/uploadFile";
-import { corsMiddleware } from "../../../app";
 
 const router = express.Router();
-router.use(corsMiddleware);
 router.post(
   "/create-bus-route",
 

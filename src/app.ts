@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
@@ -38,30 +38,6 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   })
 );
-export const corsMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
-  // Set CORS headers unconditionally for every response
-  res.setHeader("Access-Control-Allow-Origin", "https://digital-bus.ryzan.co");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  console.log(res, "response end", req);
-  // Handle preflight requests
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
-  }
-
-  next();
-};
-
-app.use(corsMiddleware);
 
 app.use("/api/uploads", express.static(path.join(cwd(), "uploads")));
 app.use("/api", router);
