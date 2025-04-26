@@ -19,9 +19,6 @@ const allowedOrigins = [
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Handle preflight requests first
-app.options("*", cors());
-
 // Then apply the CORS middleware
 app.use(
   cors({
