@@ -14,9 +14,14 @@ const allowedOrigins = [
   "https://digital-bus.ryzan.co",
   "http://digital-bus.ryzan.co",
 ];
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Handle preflight requests first
+app.options("*", cors());
+
+// Then apply the CORS middleware
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -24,7 +29,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.log("🔍 Origin rejected  from:", origin);
+        console.log("🔍 Origin rejected from:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
