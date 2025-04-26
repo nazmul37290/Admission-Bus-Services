@@ -38,7 +38,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   })
 );
-const corsMiddleware = (
+export const corsMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -51,7 +51,7 @@ const corsMiddleware = (
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
-
+  console.log(res, "response end", req);
   // Handle preflight requests
   if (req.method === "OPTIONS") {
     res.status(200).end();

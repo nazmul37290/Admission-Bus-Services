@@ -3,6 +3,7 @@ import { BusRouteController } from "./busRoutes.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { BusRouteValidations } from "./busRoutes.validation";
 import { upload } from "../../utils/uploadFile";
+import { corsMiddleware } from "../../../app";
 
 const router = express.Router();
 
@@ -13,11 +14,7 @@ router.post(
   validateRequest(BusRouteValidations.createBusRouteValidationSchema),
   BusRouteController.createBusRoutes
 );
-router.get(
-  "/",
-
-  BusRouteController.getAllBusRoutes
-);
+router.get("/", corsMiddleware, BusRouteController.getAllBusRoutes);
 router.get("/:routeId", BusRouteController.getSingleBusRoute);
 router.patch(
   "/:routeId",
