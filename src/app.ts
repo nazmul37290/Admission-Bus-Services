@@ -10,6 +10,7 @@ const app: Application = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:4173",
   "https://bus-services-client.vercel.app",
   "https://digital-bus.ryzan.co",
   "http://digital-bus.ryzan.co",
