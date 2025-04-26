@@ -8,11 +8,19 @@ const router = express.Router();
 
 router.post(
   "/create-bus-route",
+
   upload.single("image"),
   validateRequest(BusRouteValidations.createBusRouteValidationSchema),
   BusRouteController.createBusRoutes
 );
-router.get("/", BusRouteController.getAllBusRoutes);
+router.get(
+  "/",
+  (req, res, next) => {
+    console.log("route hit");
+    next();
+  },
+  BusRouteController.getAllBusRoutes
+);
 router.get("/:routeId", BusRouteController.getSingleBusRoute);
 router.patch(
   "/:routeId",
