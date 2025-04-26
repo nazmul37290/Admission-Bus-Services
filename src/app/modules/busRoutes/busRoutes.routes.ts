@@ -15,10 +15,7 @@ router.post(
 );
 router.get(
   "/",
-  (req, res, next) => {
-    console.log("route hit");
-    next();
-  },
+
   BusRouteController.getAllBusRoutes
 );
 router.get("/:routeId", BusRouteController.getSingleBusRoute);

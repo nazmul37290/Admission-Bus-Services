@@ -15,7 +15,9 @@ const createBusRoutes = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllBusRoutes = catchAsync(async (req: Request, res: Response) => {
+  console.log("get all bus before query");
   const result = await BusRouteServices.getAllBusRoutesFromDb();
+  console.log("get all bus after query");
   res.status(200).json({
     success: true,
     message: "Bus routes retrieved successfully",
