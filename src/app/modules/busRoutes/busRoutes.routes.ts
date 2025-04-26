@@ -6,7 +6,7 @@ import { upload } from "../../utils/uploadFile";
 import { corsMiddleware } from "../../../app";
 
 const router = express.Router();
-
+router.use(corsMiddleware);
 router.post(
   "/create-bus-route",
 
@@ -14,7 +14,7 @@ router.post(
   validateRequest(BusRouteValidations.createBusRouteValidationSchema),
   BusRouteController.createBusRoutes
 );
-router.get("/", corsMiddleware, BusRouteController.getAllBusRoutes);
+router.get("/", BusRouteController.getAllBusRoutes);
 router.get("/:routeId", BusRouteController.getSingleBusRoute);
 router.patch(
   "/:routeId",
