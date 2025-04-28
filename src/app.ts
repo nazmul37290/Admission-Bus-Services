@@ -49,7 +49,7 @@ app.use(
 app.use("/api/uploads", express.static(path.join(cwd(), "uploads")));
 app.use("/api", router);
 app.get("/", (req: Request, res: Response) => {
-  res.send("Bus is running too fast!! 🚌");
+  res.send("Bus is running too fast !! and giving bauli 🚌");
 });
 
 app.use(globalErrorHandler);
