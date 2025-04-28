@@ -11,37 +11,33 @@ const notFound_1 = __importDefault(require("./app/middlewares/notFound"));
 const path_1 = __importDefault(require("path"));
 const process_1 = require("process");
 const app = (0, express_1.default)();
-// const allowedOrigins = [
-//   "http://localhost:5173",
-//   "http://localhost:4173",
-//   "https://bus-services-client.vercel.app",
-//   "https://digital-bus.ryzan.co",
-//   "http://digital-bus.ryzan.co",
-// ];
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:4173",
+    "https://bus-services-client.vercel.app",
+    "https://digital-bus.ryzan.co",
+    "http://digital-bus.ryzan.co",
+];
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: "*",
-    credentials: true,
-}));
 // Then apply the CORS middleware
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       console.log("🔍 Incoming Origin:", origin);
-//       if (!origin) return callback(null, true); // Allow server-to-server requests
-//       const normalizedOrigin = origin.replace(/\/$/, ""); // remove any trailing slash
-//       if (allowedOrigins.includes(normalizedOrigin)) {
-//         callback(null, true);
-//       } else {
-//         console.log("❌ CORS Rejected Origin:", normalizedOrigin);
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-//   })
-// );
+app.use((0, cors_1.default)({
+    origin: (origin, callback) => {
+        console.log("🔍 Incoming Origin:", origin);
+        if (!origin)
+            return callback(null, true); // Allow server-to-server requests
+        const normalizedOrigin = origin.replace(/\/$/, ""); // remove any trailing slash
+        if (allowedOrigins.includes(normalizedOrigin)) {
+            callback(null, true);
+        }
+        else {
+            console.log("❌ CORS Rejected Origin:", normalizedOrigin);
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+}));
 app.use("/api/uploads", express_1.default.static(path_1.default.join((0, process_1.cwd)(), "uploads")));
 app.use("/api", routes_1.default);
 app.get("/", (req, res) => {
