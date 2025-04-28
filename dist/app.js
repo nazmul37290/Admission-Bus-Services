@@ -45,7 +45,7 @@ app.use((0, cors_1.default)({
 app.use("/api/uploads", express_1.default.static(path_1.default.join((0, process_1.cwd)(), "uploads")));
 app.use("/api", routes_1.default);
 app.get("/", (req, res) => {
-    res.send("Bus is running too fast!! 🚌");
+    res.send("Bus is running too fast !! and giving bauli 🚌");
 });
 app.use(globalErrorHandler_1.default);
 app.use(notFound_1.default);
