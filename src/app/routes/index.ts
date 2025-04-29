@@ -8,6 +8,7 @@ import { DuaRoutes } from "../modules/duas/dua.routes";
 import { ticketRoutes } from "../modules/ticket/ticket.routes";
 import { authRoutes } from "../modules/Authentication/auth.route";
 import { PaymentRoutes } from "../modules/payment/payment.routes";
+import { GalleryRouter } from "../modules/gallery/gallery.route";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -46,6 +47,10 @@ const moduleRoutes = [
   {
     path: "/payment",
     routes: PaymentRoutes,
+  },
+  {
+    path: "/gallery",
+    routes: GalleryRouter,
   },
 ];
 
