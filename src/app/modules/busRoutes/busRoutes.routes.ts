@@ -16,6 +16,7 @@ router.get("/", BusRouteController.getAllBusRoutes);
 router.get("/:routeId", BusRouteController.getSingleBusRoute);
 router.patch(
   "/:routeId",
+  upload.single("image"),
   validateRequest(BusRouteValidations.updateBusRouteValidationSchema),
   BusRouteController.updateBusRoute
 );

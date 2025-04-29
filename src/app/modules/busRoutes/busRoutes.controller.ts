@@ -15,9 +15,7 @@ const createBusRoutes = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllBusRoutes = catchAsync(async (req: Request, res: Response) => {
-  console.log("get all bus before query");
   const result = await BusRouteServices.getAllBusRoutesFromDb();
-  console.log("get all bus after query");
   res.status(200).json({
     success: true,
     message: "Bus routes retrieved successfully",
@@ -26,6 +24,7 @@ const getAllBusRoutes = catchAsync(async (req: Request, res: Response) => {
 });
 const getSingleBusRoute = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.routeId;
+
   const result = await BusRouteServices.getSingleBusRouteFromDb(id);
   if (result) {
     res.status(200).json({
@@ -45,6 +44,10 @@ const getSingleBusRoute = catchAsync(async (req: Request, res: Response) => {
 const updateBusRoute = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.routeId;
   const updatedData = req.body;
+  const file = req.file;
+  if (file) {
+    updatedData.destinationImage = `${file?.path}`;
+  }
   const result = await BusRouteServices.updateBusRouteIntoDb(id, updatedData);
   if (result) {
     res.status(200).json({
