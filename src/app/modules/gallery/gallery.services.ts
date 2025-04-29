@@ -7,7 +7,7 @@ const createGalleryItemIntoDb = async (galleryItemData: TGalleryItem) => {
 };
 
 const getAllGalleryItemFromDb = async () => {
-  const result = await galleryModel.find();
+  const result = await galleryModel.find({ isDeleted: false });
   return result;
 };
 
