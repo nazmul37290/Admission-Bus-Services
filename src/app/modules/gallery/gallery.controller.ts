@@ -26,7 +26,7 @@ const getAllGalleryItems = catchAsync(async (req: Request, res: Response) => {
       data: result,
     });
   } else {
-    res.status(404).json({
+    res.status(200).json({
       success: false,
       message: "No items found",
       data: null,

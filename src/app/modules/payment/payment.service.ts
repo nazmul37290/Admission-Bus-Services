@@ -10,7 +10,9 @@ const createPaymentIntoDb = async (paymentDetails: TPayment) => {
   return result;
 };
 const getAllPaymentsFromDb = async () => {
-  const result = await PaymentModel.find().populate("bookingId");
+  const result = await PaymentModel.find()
+    .populate("bookingId")
+    .sort({ createdAt: -1 });
   return result;
 };
 

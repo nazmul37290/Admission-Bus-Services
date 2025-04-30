@@ -55,11 +55,6 @@ const createBookingIntoDb = async (bookingData: TBooking) => {
 };
 
 const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
-  //   let queryObj;
-  //   if (query) {
-  //     queryObj = query;
-  //   }
-
   const result = await bookingModel.aggregate([
     {
       $lookup: {
@@ -76,6 +71,11 @@ const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
       $match: {
         // ...(queryObj?.unit ? { "unitDetails.id": queryObj?.unit } : {}),
         isDeleted: false, // Match the unitId.id field
+      },
+    },
+    {
+      $sort: {
+        createdAt: -1,
       },
     },
   ]);
