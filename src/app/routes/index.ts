@@ -9,6 +9,7 @@ import { ticketRoutes } from "../modules/ticket/ticket.routes";
 import { authRoutes } from "../modules/Authentication/auth.route";
 import { PaymentRoutes } from "../modules/payment/payment.routes";
 import { GalleryRouter } from "../modules/gallery/gallery.route";
+import { CouponRouter } from "../modules/coupon/coupon.route";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -51,6 +52,10 @@ const moduleRoutes = [
   {
     path: "/gallery",
     routes: GalleryRouter,
+  },
+  {
+    path: "/coupons",
+    routes: CouponRouter,
   },
 ];
 
