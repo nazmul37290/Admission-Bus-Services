@@ -1,6 +1,5 @@
 import { model, Schema } from "mongoose";
 import { TUpdateUserData, TUser } from "./user.interface";
-import { AppError } from "../../errors/AppError";
 import bcrypt from "bcryptjs";
 import config from "../../config";
 
@@ -29,6 +28,8 @@ const userSchema = new Schema<TUser>(
       enum: ["active", "disable"],
       default: "active",
     },
+    resetToken: { type: String },
+    resetTokenExpires: { type: Date },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -36,14 +37,6 @@ const userSchema = new Schema<TUser>(
   },
   { timestamps: true }
 );
-
-userSchema.pre("save", async function (next) {
-  const isAlreadyExists = await userModel.findOne({ email: this?.email });
-  if (isAlreadyExists) {
-    throw new AppError(409, "User email already exists");
-  }
-  next();
-});
 
 userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(
@@ -62,23 +55,6 @@ userSchema.pre("findOneAndUpdate", async function (next) {
   }
   next();
 });
-
-// userSchema.pre("findOneAndUpdate", async function (next) {
-//   const updatedData: TUpdateUserData = this.getUpdate() as TUpdateUserData;
-
-//   if (updatedData && updatedData.email) {
-//     const isAlreadyExists = await userModel.findOne({
-//       email: updatedData?.email,
-//     });
-//     if (isAlreadyExists) {
-//       throw new Error("User email already exists, cannot update");
-//     }
-//   }
-//   if (updatedData && updatedData.id) {
-//     throw new AppError(403, "You cannot update id");
-//   }
-//   next();
-// });
 
 userSchema.post("find", async function (doc, next) {
   if (doc) {
