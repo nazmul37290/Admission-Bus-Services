@@ -1,91 +1,61 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { UnitServices } from "./setting.services";
+import { settingServices } from "./setting.services";
 
-const createUnit = catchAsync(async (req: Request, res: Response) => {
-  const unitData = req.body;
-  const result = await UnitServices.createUnitIntoDb(unitData);
+const createSetting = catchAsync(async (req: Request, res: Response) => {
+  const settingData = req.body;
+  const file = req.file;
+  if (file) {
+    settingData.siteLogo = `${file?.path}`;
+  }
+  const result = await settingServices.createSettingsIntoDb(settingData);
   res.status(200).json({
     success: true,
-    message: "Unit created successfully",
+    message: "Settings created successfully",
     data: result,
   });
 });
-const getAllUnits = catchAsync(async (req: Request, res: Response) => {
-  const query = req.query;
-  const result = await UnitServices.getAllUnitsFromDb(query);
-  if (result?.length) {
-    res.status(200).json({
-      success: true,
-      message: "All Units retrieved successfully",
-      data: result,
-    });
-  } else {
-    res.status(404).json({
-      success: false,
-      message: "No Units found",
-      data: null,
-    });
-  }
-});
-const getSingleUnit = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.unitId;
-  const result = await UnitServices.getSingleUnitFromDb(id);
+const getAllSettings = catchAsync(async (req: Request, res: Response) => {
+  const result = await settingServices.getSettingsFromDb();
   if (result) {
     res.status(200).json({
       success: true,
-      message: "Unit retrieved successfully",
+      message: "Settings retrieved successfully",
       data: result,
     });
   } else {
     res.status(404).json({
       success: false,
-      message: "Unit not found",
+      message: "No settings found",
       data: null,
     });
   }
 });
 
-const updateUnit = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.unitId;
+const updateSettings = catchAsync(async (req: Request, res: Response) => {
   const updatedData = req.body;
-  const result = await UnitServices.updateUnitIntoDb(id, updatedData);
-  if (result) {
-    res.status(200).json({
-      success: true,
-      message: "Unit updated successfully",
-      data: result,
-    });
-  } else {
-    res.status(404).json({
-      success: false,
-      message: "Unit not found",
-      data: null,
-    });
+  const file = req.file;
+  if (file) {
+    updatedData.siteLogo = `${file?.path}`;
   }
-});
-const deleteUnit = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.unitId;
-  const result = await UnitServices.deleteUnitFromDb(id);
+  const result = await settingServices.updateSettingsIntoDb(updatedData);
   if (result) {
     res.status(200).json({
       success: true,
-      message: "Unit deleted successfully",
+      message: "Settings updated successfully",
       data: result,
     });
   } else {
     res.status(404).json({
       success: false,
-      message: "Unit not found",
+      message: "Setting not found",
       data: null,
     });
   }
 });
 
-export const UnitController = {
-  createUnit,
-  getAllUnits,
-  getSingleUnit,
-  updateUnit,
-  deleteUnit,
+export const SettingsController = {
+  createSetting,
+  getAllSettings,
+  updateSettings,
 };

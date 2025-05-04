@@ -1,45 +1,46 @@
 import { z } from "zod";
 
-const createUnitValidationSchema = z.object({
+export const settingValidationSchema = z.object({
   body: z.object({
-    routeId: z.string({
-      invalid_type_error: "Route id should be a string",
-      required_error: "Route id is required",
-    }),
-    dateOfExam: z.string({
-      invalid_type_error: "Date of exam should be a string",
-      required_error: "Date of exam is required",
-    }),
-    groupName: z.string({
-      invalid_type_error: "Group name should be a string",
-      required_error: "Group name is required",
-    }),
-  }),
-});
-const updateUnitValidationSchema = z.object({
-  body: z.object({
-    routeId: z
-      .string({
-        invalid_type_error: "Route id should be a string",
-        required_error: "Route id is required",
+    siteName: z.string().optional(),
+    siteLogo: z.string().url("Invalid logo URL").optional(),
+    showSiteNameAndLogo: z.boolean().optional(),
+
+    socialLinks: z
+      .object({
+        facebook: z.string().optional(),
+        twitter: z.string().optional(),
+        instagram: z.string().optional(),
+        youtube: z.string().optional(),
       })
       .optional(),
-    dateOfExam: z
-      .string({
-        invalid_type_error: "Date of exam should be a string",
-        required_error: "Date of exam is required",
+
+    contactInfo: z
+      .object({
+        email: z.array(z.string().email("Invalid email")).optional(),
+        phone: z.array(z.string()).optional(),
+        address: z.array(z.string()).optional(),
       })
       .optional(),
-    groupName: z
-      .string({
-        invalid_type_error: "Group name should be a string",
-        required_error: "Group name is required",
+
+    aboutUs: z.string().optional(),
+    termsAndConditions: z.string().optional(),
+    privacyPolicy: z.string().optional(),
+    helpLine: z.array(z.string()).optional(),
+
+    bannerSection: z
+      .object({
+        title: z.string().optional(),
+        description: z.string().optional(),
+        image: z.string().url("Invalid image URL").optional(),
+        buttonText: z.string().optional(),
+        buttonLink: z.string().optional(),
+        showButton: z.boolean().optional(),
       })
       .optional(),
   }),
 });
 
-export const UnitValidations = {
-  createUnitValidationSchema,
-  updateUnitValidationSchema,
+export const settingValidations = {
+  settingValidationSchema,
 };

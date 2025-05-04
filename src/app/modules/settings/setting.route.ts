@@ -1,22 +1,23 @@
 import express from "express";
-import { UnitController } from "./setting.controller";
+import { SettingsController } from "./setting.controller";
 import validateRequest from "../../middlewares/validateRequest";
-import { UnitValidations } from "./setting.validation";
+import { settingValidations } from "./setting.validation";
+import { upload } from "../../utils/uploadFile";
 
 const router = express.Router();
 
 router.post(
-  "/create-unit",
-  validateRequest(UnitValidations.createUnitValidationSchema),
-  UnitController.createUnit
+  "/create-setting",
+  upload.single("siteLogo"),
+  validateRequest(settingValidations.settingValidationSchema),
+  SettingsController.createSetting
 );
-router.get("/", UnitController.getAllUnits);
-router.get("/:unitId", UnitController.getSingleUnit);
+router.get("/", SettingsController.getAllSettings);
 router.patch(
-  "/:unitId",
-  validateRequest(UnitValidations.updateUnitValidationSchema),
-  UnitController.updateUnit
+  "/update-setting",
+  upload.single("siteLogo"),
+  validateRequest(settingValidations.settingValidationSchema),
+  SettingsController.updateSettings
 );
-router.delete("/:unitId", UnitController.deleteUnit);
 
-export const UnitRouter = router;
+export const SettingRouter = router;

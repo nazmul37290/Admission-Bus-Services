@@ -10,6 +10,7 @@ import { authRoutes } from "../modules/Authentication/auth.route";
 import { PaymentRoutes } from "../modules/payment/payment.routes";
 import { GalleryRouter } from "../modules/gallery/gallery.route";
 import { CouponRouter } from "../modules/coupon/coupon.route";
+import { SettingRouter } from "../modules/settings/setting.route";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -56,6 +57,10 @@ const moduleRoutes = [
   {
     path: "/coupons",
     routes: CouponRouter,
+  },
+  {
+    path: "/settings",
+    routes: SettingRouter,
   },
 ];
 
