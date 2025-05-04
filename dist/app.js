@@ -23,7 +23,6 @@ app.use(express_1.default.json());
 // Then apply the CORS middleware
 app.use((0, cors_1.default)({
     origin: (origin, callback) => {
-        console.log("🔍 Incoming Origin:", origin);
         if (!origin)
             return callback(null, true); // Allow server-to-server requests
         const normalizedOrigin = origin.replace(/\/$/, ""); // remove any trailing slash
@@ -31,7 +30,6 @@ app.use((0, cors_1.default)({
             callback(null, true);
         }
         else {
-            console.log("❌ CORS Rejected Origin:", normalizedOrigin);
             callback(new Error("Not allowed by CORS"));
         }
     },

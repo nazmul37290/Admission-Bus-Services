@@ -82,6 +82,34 @@ const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
   return result;
 };
 
+const getAllBookingsByBusIdFromDb = async (busId: string) => {
+  const result = await bookingModel.aggregate([
+    {
+      $lookup: {
+        from: "buses", // The name of the buses collection
+        localField: "busId", // Field in the Bus collection
+        foreignField: "_id", // Field in the bus collection
+        as: "busDetails", // Alias for the joined data
+      },
+    },
+    {
+      $unwind: "$busDetails", // Flatten the array from $lookup
+    },
+    {
+      $match: {
+        busId: new mongoose.Types.ObjectId(busId),
+        isDeleted: false, // Match the unitId.id field
+      },
+    },
+    {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+  ]);
+  return result;
+};
+
 const getSingleBookingFromDb = async (id: string) => {
   const result = await bookingModel.aggregate([
     {
@@ -207,4 +235,5 @@ export const BookingServices = {
   getRevenueFromBookings,
   updateBookingIntoDb,
   deleteBookingFromDb,
+  getAllBookingsByBusIdFromDb,
 };

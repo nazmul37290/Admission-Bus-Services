@@ -36,6 +36,27 @@ const getAllBookings = catchAsync(async (req: Request, res: Response) => {
     });
   }
 });
+
+const getAllBookingsByBusId = catchAsync(
+  async (req: Request, res: Response) => {
+    const busId = req.params.busId;
+    const result = await BookingServices.getAllBookingsByBusIdFromDb(busId);
+    if (result?.length) {
+      res.status(200).json({
+        success: true,
+        message: "Bookings retrieved successfully",
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No booking found",
+        data: null,
+      });
+    }
+  }
+);
+
 const getSingleBooking = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.bookingId;
   const result = await BookingServices.getSingleBookingFromDb(id);
@@ -109,4 +130,5 @@ export const BookingController = {
   getRevenue,
   updateBooking,
   deleteBooking,
+  getAllBookingsByBusId,
 };

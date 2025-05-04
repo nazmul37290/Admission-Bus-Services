@@ -12,6 +12,7 @@ router.post(
   BookingController.createBooking
 );
 router.get("/", BookingController.getAllBookings);
+router.get("/seat-plan/:busId", BookingController.getAllBookingsByBusId);
 router.get("/get-revenue", BookingController.getRevenue);
 router.get("/:bookingId", BookingController.getSingleBooking);
 router.patch(
