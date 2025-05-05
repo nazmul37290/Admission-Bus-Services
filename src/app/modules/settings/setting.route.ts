@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   "/create-setting",
-  upload.single("siteLogo"),
+  upload.fields([{ name: "siteLogo" }, { name: "bannerImage" }]),
   validateRequest(settingValidations.settingValidationSchema),
   SettingsController.createSetting
 );

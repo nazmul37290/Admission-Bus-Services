@@ -4,9 +4,21 @@ import { settingServices } from "./setting.services";
 
 const createSetting = catchAsync(async (req: Request, res: Response) => {
   const settingData = req.body;
-  const file = req.file;
-  if (file) {
-    settingData.siteLogo = `${file?.path}`;
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+  if (files?.siteLogo) {
+    settingData.siteLogo = files.siteLogo[0].path;
+  }
+
+  // Handle banner update
+  if (files?.bannerImage) {
+    settingData.bannerSection = {
+      ...req.body.bannerSection,
+      image: files.bannerImage[0].path,
+    };
+  } else if (req.body.bannerSection) {
+    settingData.bannerSection = {
+      ...req.body.bannerSection,
+    };
   }
   const result = await settingServices.createSettingsIntoDb(settingData);
   res.status(200).json({
