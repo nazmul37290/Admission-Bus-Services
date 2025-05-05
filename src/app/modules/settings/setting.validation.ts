@@ -3,7 +3,7 @@ import { z } from "zod";
 export const settingValidationSchema = z.object({
   body: z.object({
     siteName: z.string().optional(),
-    siteLogo: z.string().url("Invalid logo URL").optional(),
+    siteLogo: z.string().optional(),
     showSiteNameAndLogo: z.boolean().optional(),
 
     socialLinks: z
@@ -32,7 +32,7 @@ export const settingValidationSchema = z.object({
       .object({
         title: z.string().optional(),
         description: z.string().optional(),
-        image: z.string().url("Invalid image URL").optional(),
+        image: z.string().optional(),
         buttonText: z.string().optional(),
         buttonLink: z.string().optional(),
         showButton: z.boolean().optional(),

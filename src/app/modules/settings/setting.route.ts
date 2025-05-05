@@ -15,7 +15,7 @@ router.post(
 router.get("/", SettingsController.getAllSettings);
 router.patch(
   "/update-setting",
-  upload.single("siteLogo"),
+  upload.fields([{ name: "siteLogo" }, { name: "bannerImage" }]),
   validateRequest(settingValidations.settingValidationSchema),
   SettingsController.updateSettings
 );
