@@ -22,6 +22,8 @@ export type TBooking = {
   seats: Array<string>;
   paymentMethod: "bkash" | "cash";
   totalPrice: number;
+  due: number;
+  paidAmount: number;
   status: "booked" | "cancelled";
   isDeleted: boolean;
 };

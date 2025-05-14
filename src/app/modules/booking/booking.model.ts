@@ -52,6 +52,15 @@ const bookingSchema = new Schema<TBooking>(
       type: Number,
       required: true,
     },
+    due: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    paidAmount: {
+      type: Number,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["booked", "cancelled"],

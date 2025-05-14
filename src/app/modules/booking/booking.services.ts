@@ -10,6 +10,7 @@ import { PaymentModel } from "../payment/payment.model";
 const createBookingIntoDb = async (bookingData: TBooking) => {
   bookingData.id = await generateUniqueId(bookingModel);
   // const result = await bookingModel.create(bookingData);
+
   const session = await mongoose.startSession();
   try {
     session.startTransaction();

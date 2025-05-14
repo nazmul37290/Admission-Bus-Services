@@ -13,9 +13,7 @@ const checkUserFromDb = async (userData: TAuthUser) => {
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
-  console.log(password);
-  console.log(user.password);
-  console.log(isMatch);
+
   if (!isMatch) {
     throw new AppError(401, "Invalid credentials");
   }

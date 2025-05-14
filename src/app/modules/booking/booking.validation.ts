@@ -32,6 +32,16 @@ const createBookingValidationSchema = z.object({
       required_error: "Total Price is required",
       invalid_type_error: "Total Price should be a number",
     }),
+    due: z
+      .number({
+        required_error: "Due is required",
+        invalid_type_error: "Due should be a number",
+      })
+      .default(0),
+    paidAmount: z.number({
+      required_error: "Paid amount is required",
+      invalid_type_error: "Paid amount should be a number",
+    }),
   }),
 });
 
@@ -73,6 +83,18 @@ const updateBookingValidationSchema = z.object({
       .number({
         required_error: "Total Price is required",
         invalid_type_error: "Total Price should be a number",
+      })
+      .optional(),
+    due: z
+      .number({
+        required_error: "Due is required",
+        invalid_type_error: "Due should be a number",
+      })
+      .optional(),
+    paidAmount: z
+      .number({
+        required_error: "Paid amount is required",
+        invalid_type_error: "Paid amount should be a number",
       })
       .optional(),
   }),
